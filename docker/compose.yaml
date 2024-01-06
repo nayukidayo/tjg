@@ -1,0 +1,14 @@
+services:
+  app:
+    restart: always
+    image: nayukidayo/tjg
+    logging:
+      driver: local
+    ports:
+      - '54327:54327'
+      - '54328:54328'
+      - '54329:54329'
+    environment:
+      - RETAIN=30
+    volumes:
+      - ./data:/app/data

@@ -1,0 +1,10 @@
+{
+  "name": "tjg",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "^9.2.2",
+    "find-my-way": "^8.0.0"
+  }
+}
