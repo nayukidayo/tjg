@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --registry https://repo.huaweicloud.com/repository/npm/
+RUN npm install
 
 COPY . .
 
