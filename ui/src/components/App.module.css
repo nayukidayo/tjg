@@ -1,0 +1,7 @@
+.q {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(rem(325px), max-content));
+  justify-content: center;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md);
+}

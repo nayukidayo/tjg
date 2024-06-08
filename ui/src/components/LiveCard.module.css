@@ -1,0 +1,38 @@
+.c {
+  width: rem(325px);
+  background-color: var(--mantine-color-body);
+}
+
+.t {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--mantine-spacing-xs);
+  line-height: 1;
+  color: var(--mantine-color-dimmed);
+  & > span:first-of-type {
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 700;
+  }
+  & > span:last-of-type {
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.d {
+  display: grid;
+  column-gap: var(--mantine-spacing-xs);
+  row-gap: rem(5px);
+  align-items: center;
+  color: var(--mantine-color-gray-7);
+  & > span {
+    line-height: 0;
+  }
+}
+
+.g {
+  grid-template-columns: max-content minmax(max-content, 1fr) max-content minmax(max-content, 1fr);
+}
+
+.r {
+  grid-template-columns: repeat(2, max-content);
+}

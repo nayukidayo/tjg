@@ -1,0 +1,58 @@
+services:
+  openobserve:
+    image: openobserve/openobserve:v0.9.1
+    restart: unless-stopped
+    logging:
+      driver: local
+    environment:
+      - ZO_ROOT_USER_EMAIL=nayukidayo@163.com
+      - ZO_ROOT_USER_PASSWORD=nayukidayo
+      - ZO_DATA_DIR=/data
+      - ZO_COMPACT_DATA_RETENTION_DAYS=30
+      - ZO_MMDB_DISABLE_DOWNLOAD=true
+      - ZO_TELEMETRY=false
+      - RUST_LOG=error
+    volumes:
+      - ./data/openobserve:/data
+  nats:
+    image: nats:2.10.12
+    restart: unless-stopped
+    logging:
+      driver: local
+    command: ["--auth", "nayukidayo"]
+  pub:
+    image: nayukidayo/tjg:latest
+    restart: unless-stopped
+    logging:
+      driver: local
+    environment:
+      - NATS_URL=nats://nayukidayo@nats:4222
+      - GPS_ADDR=:54328
+      - GPS_MAX_BUF=512
+      - RFID_ADDR=:54329
+      - RFID_MAX_BUF=512
+    ports:
+      - '54328:54328'
+      - '54329:54329'
+    depends_on:
+      - nats
+  sub:
+    image: nayukidayo/tjg:latest
+    restart: unless-stopped
+    logging:
+      driver: local
+    environment:
+      - NATS_URL=nats://nayukidayo@nats:4222
+      - API_ADDR=:54327
+      - BATCH_SIZE=1000
+      - BATCH_TIMEOUT=30s
+      - DB_READ_URL=http://openobserve:5080/api/tjg/_search
+      - DB_WRITE_URL=http://openobserve:5080/api/tjg/default/_json
+      - DB_TOKEN=bmF5dWtpZGF5b0AxNjMuY29tOm5heXVraWRheW8=
+      - FORWARD_URL=http://10.128.58.177:9090/Supermap_Manage/tuoche/getTuocheData
+    ports:
+      - '54327:54327'
+    command: ["/sub"]
+    depends_on:
+      - nats
+      - openobserve
